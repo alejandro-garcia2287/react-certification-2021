@@ -38,6 +38,15 @@
     "prettier": "^2.1.1",
     "pretty-quick": "^3.0.0"
   },
+  "babel": {
+    "presets": [
+      "@babel/preset-react",
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-transform-react-jsx"
+    ]
+  },
   "browserslist": {
     "production": [
       ">0.2%",
