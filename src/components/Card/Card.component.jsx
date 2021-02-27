@@ -1,20 +1,47 @@
 import React from 'react';
-import Styled from './styled';
+import {
+  Img,
+  StyledContainer,
+  Title,
+  Description,
+  StyledCol,
+  StyledCard,
+} from './Card.styled';
 
-function Card(props) {
+function Card({ selectVideoFunction, item, tabIndex }) {
+  const { title, description } = item.snippet;
+  const imgSrc = item.snippet.thumbnails.high.url;
+
+  function handleOnClick() {
+    selectVideoFunction(item);
+  }
+
+  function handleOnKeyDown(event) {
+    if (event.keyCode === 13) {
+      selectVideoFunction(item);
+    }
+  }
+
   return (
     <>
-      <Styled.StyledCol lg="4" md="6">
-        <Styled.StyledCard className="dflex">
-          <Styled.Img src={props.imgSrc} />
-          <Styled.StyledContainer>
-            <Styled.Title>
-              <b>{props.title}</b>
-            </Styled.Title>
-            <Styled.Description>{props.description}</Styled.Description>
-          </Styled.StyledContainer>
-        </Styled.StyledCard>
-      </Styled.StyledCol>
+      <StyledCol lg="4" md="6">
+        <StyledCard className="dflex">
+          <div
+            onClick={handleOnClick}
+            onKeyDown={handleOnKeyDown}
+            role="button"
+            tabIndex={tabIndex}
+          >
+            <Img src={imgSrc} />
+            <StyledContainer>
+              <Title>
+                <b>{title}</b>
+              </Title>
+              <Description>{description}</Description>
+            </StyledContainer>
+          </div>
+        </StyledCard>
+      </StyledCol>
     </>
   );
 }

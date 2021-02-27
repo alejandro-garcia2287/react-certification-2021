@@ -1,17 +1,14 @@
 import React from 'react';
 import CardListComponent from '../../components/CardList/CardList.component';
-import mockedData from '../../youtube-videos-mock.json';
-import Styled from './styled';
+import { H1, Title } from './Home.page.styled';
 
-function Home() {
-  const { items } = mockedData;
-
+function Home({ items, selectVideo }) {
   return (
     <>
-      <Styled.Title>
-        <Styled.H1>Video playlist</Styled.H1>
-      </Styled.Title>
-      <CardListComponent items={items} />
+      <Title>
+        <H1>Video playlist</H1>
+      </Title>
+      <CardListComponent items={items} selectVideo={selectVideo} />
     </>
   );
 }

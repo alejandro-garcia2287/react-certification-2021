@@ -13,32 +13,32 @@ describe('CardList test', () => {
   });
 
   describe('Items filter function', () => {
-    it('No parameters should return original elements ', function () {
+    it('No parameters should return original elements ', () => {
       const originalSize = items.length;
       const filteredItems = filterItems(items);
       expect(filteredItems).toBeDefined();
       expect(filteredItems.length).toBe(originalSize);
     });
 
-    it('Filter by description', function () {
+    it('Filter by description', () => {
       const filteredItems = filterItems(items, 'Wizeline');
       expect(filteredItems).toBeDefined();
       expect(filteredItems.length).toBe(16);
     });
 
-    it('Filter by title', function () {
+    it('Filter by title', () => {
       const filteredItems = filterItems(items, 'Mexico City');
       expect(filteredItems).toBeDefined();
       expect(filteredItems.length).toBe(3);
     });
 
-    it('Filter by description and Title', function () {
+    it('Filter by description and Title', () => {
       const filteredItems = filterItems(items, 'Wizeline', 'Mexico City');
       expect(filteredItems).toBeDefined();
       expect(filteredItems.length).toBe(2);
     });
 
-    it('Filter by wrong description and Title', function () {
+    it('Filter by wrong description and Title', () => {
       const filteredItems = filterItems(items, 'Guadalajara', 'Mexico City');
       expect(filteredItems).toBeDefined();
       expect(filteredItems.length).toBe(0);
