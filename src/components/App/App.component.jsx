@@ -26,7 +26,7 @@ function App() {
         <GlobalStyle />
         <AppNavbar
           brand="React Challenge"
-          navLinkHref="/home"
+          navLinkHref="/"
           navLinkText="Home"
           apiClient={doFetch}
           selectVideo={setSelectedVideo}
