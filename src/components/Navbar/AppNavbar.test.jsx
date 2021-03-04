@@ -31,6 +31,7 @@ describe('Navbar Component tests', () => {
   it('Search video input enter test', async () => {
     jest.useFakeTimers();
     const apiClientMock = jest.fn();
+    const selectVideo = jest.fn();
     await act(async () => {
       render(
         <AppNavbar
@@ -38,6 +39,7 @@ describe('Navbar Component tests', () => {
           navLinkHref="/home"
           navLinkText="Home"
           apiClient={apiClientMock}
+          selectVideo={selectVideo}
         />
       );
       fireEvent.change(screen.getByPlaceholderText('Search'), { key: 'A', keyCode: 65 });
@@ -53,6 +55,7 @@ describe('Navbar Component tests', () => {
   it('Search video input on change test', async () => {
     jest.useFakeTimers();
     const apiClientMock = jest.fn();
+    const selectVideo = jest.fn();
     await act(async () => {
       render(
         <AppNavbar
@@ -60,6 +63,7 @@ describe('Navbar Component tests', () => {
           navLinkHref="/home"
           navLinkText="Home"
           apiClient={apiClientMock}
+          selectVideo={selectVideo}
         />
       );
       fireEvent.change(screen.getByPlaceholderText('Search'), {

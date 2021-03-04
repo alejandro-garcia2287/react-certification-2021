@@ -3,16 +3,15 @@ import { Navbar, Nav, NavDropdown, Form, FormControl } from 'react-bootstrap';
 import { FaCog } from 'react-icons/fa';
 import debounce from 'lodash.debounce';
 
-function AppNavbar({ navLinkHref, brand, navLinkText, apiClient }) {
+function AppNavbar({ navLinkHref, brand, navLinkText, apiClient: doFetch, selectVideo }) {
   const debouncedAPIQuery = useCallback(
-    debounce(
-      (query) =>
-        apiClient(
-          `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=${query}`
-        ),
-      500
-    ),
-    [apiClient]
+    debounce((query) => {
+      selectVideo(undefined);
+      doFetch(
+        `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=${query}`
+      );
+    }, 500),
+    [doFetch]
   );
 
   function handleOnChange(event) {
