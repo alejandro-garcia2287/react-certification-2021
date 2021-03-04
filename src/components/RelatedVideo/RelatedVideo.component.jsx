@@ -2,8 +2,8 @@ import React from 'react';
 import { Row, Img, H1, P, Col } from './RelatedVideo.styled';
 
 function RelatedVideo({ video, selectVideo, tabIndex }) {
-  const { title, description } = video.snippet;
-  const imgSrc = video.snippet.thumbnails.high.url;
+  const { title, description, thumbnails } = video.snippet;
+  const imgSrc = thumbnails.high.url;
 
   function handleOnClick() {
     selectVideo(video);

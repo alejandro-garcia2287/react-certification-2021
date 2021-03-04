@@ -4,8 +4,7 @@ import mockData from '../youtube-videos-mock.json';
 
 describe('useFetch Hook tests', () => {
   function setupFetchStub(data) {
-    return function fetchStub(_url) {
-      console.log(`Performing Mock request to: ${_url}`);
+    return function fetchStub() {
       return new Promise((resolve) => {
         resolve({
           json: () =>
@@ -18,22 +17,22 @@ describe('useFetch Hook tests', () => {
   }
 
   beforeEach(() => {
-    // jest.spyOn(global, 'fetch').mockResolvedValue({
-    //   json: jest.fn().mockResolvedValue(mockData),
-    // });
-    global.fetch = jest.fn().mockImplementation(setupFetchStub(mockData));
+    act(() => {
+      global.fetch = jest.fn().mockImplementation(setupFetchStub(mockData));
+    });
   });
 
   afterEach(() => {
-    // jest.restoreAllMocks();
-    global.fetch.mockClear();
-    delete global.fetch;
+    act(() => {
+      global.fetch.mockClear();
+      delete global.fetch;
+    });
   });
 
-  it('should be created successfully', () => {
+  it('should be created successfully', async () => {
     const { result } = renderHook(() => useFetch());
-
     const [isLoading, data, setUri] = result.current;
+
     act(() => {
       setUri('test');
     });

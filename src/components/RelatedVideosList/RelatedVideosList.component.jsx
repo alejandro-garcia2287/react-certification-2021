@@ -15,14 +15,18 @@ function RelatedVideosList({ video, selectVideo }) {
       ) : (
         data &&
         data.items &&
-        data.items.map((item, index) => (
-          <RelatedVideo
-            key={item.id.videoId}
-            video={item}
-            selectVideo={selectVideo}
-            tabIndex={index}
-          />
-        ))
+        data.items.map((item, index) => {
+          return (
+            item.snippet && (
+              <RelatedVideo
+                key={item.id.videoId || item.id.channelId}
+                video={item}
+                selectVideo={selectVideo}
+                tabIndex={index}
+              />
+            )
+          );
+        })
       )}
     </Container>
   );
