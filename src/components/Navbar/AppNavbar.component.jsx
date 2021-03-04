@@ -5,14 +5,13 @@ import debounce from 'lodash.debounce';
 
 function AppNavbar({ navLinkHref, brand, navLinkText, apiClient }) {
   const debouncedAPIQuery = useCallback(
-    () =>
-      debounce(
-        (query) =>
-          apiClient(
-            `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=${query}`
-          ),
-        500
-      ),
+    debounce(
+      (query) =>
+        apiClient(
+          `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=${query}`
+        ),
+      500
+    ),
     [apiClient]
   );
 
