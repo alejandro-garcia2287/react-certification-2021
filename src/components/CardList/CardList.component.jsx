@@ -1,20 +1,22 @@
 import React from 'react';
 import Card from '../Card/Card.component';
-import Styled from './styled';
+import CardRow from './CardList.styled';
 
-function CardList({ items }) {
+function CardList({ items, selectVideo }) {
   return (
     <>
-      <Styled.CardRow>
-        {items.map(({ etag, snippet }) => (
-          <Card
-            key={etag}
-            imgSrc={snippet.thumbnails.high.url}
-            title={snippet.title}
-            description={snippet.description}
-          />
-        ))}
-      </Styled.CardRow>
+      {items && (
+        <CardRow>
+          {items.map((item, index) => (
+            <Card
+              key={item.etag}
+              item={item}
+              selectVideoFunction={selectVideo}
+              tabIndex={index}
+            />
+          ))}
+        </CardRow>
+      )}
     </>
   );
 }

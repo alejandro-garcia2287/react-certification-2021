@@ -11,5 +11,4 @@ const H1 = styled.h1`
   font-family: ${(props) => props.theme.fontFamily};
 `;
 
-const Styled = { Title, H1 };
-export default Styled;
+export { Title, H1 };

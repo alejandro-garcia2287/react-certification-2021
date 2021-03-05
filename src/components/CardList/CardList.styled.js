@@ -6,5 +6,4 @@ const CardRow = styled(Row)`
   padding: 0 20px;
 `;
 
-const Styled = { CardRow };
-export default Styled;
+export default CardRow;

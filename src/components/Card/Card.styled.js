@@ -5,6 +5,9 @@ const Img = styled.img`
   width: 100%;
   border-radius: 5px 5px 0 0;
   max-height: 300px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledCard = styled(BoostrapCard)`
@@ -28,12 +31,19 @@ const Title = styled.h1`
   font-family: ${(props) => props.theme.fontFamily};
   font-weight: normal;
   padding-top: 0.8rem;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Description = styled.p`
   font-size: 1rem;
   font-family: ${(props) => props.theme.fontFamily};
   color: #707070;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const StyledCol = styled(Col)`
@@ -42,6 +52,4 @@ const StyledCol = styled(Col)`
   justify-content: center;
 `;
 
-const Styled = { Img, StyledCard, StyledContainer, Title, Description, StyledCol };
-
-export default Styled;
+export { Img, StyledCard, StyledContainer, Title, Description, StyledCol };
