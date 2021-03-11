@@ -1,9 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Div, P } from './VideoPlayer.styled';
+import VideoContext from '../../state/VideoProvider';
 
-function VideoPlayer({ video }) {
-  const { title, description } = video.snippet;
-  const { videoId } = video.id;
+function VideoPlayer() {
+  const { selectedVideo } = useContext(VideoContext);
+
+  const { title, description } = selectedVideo.snippet;
+  const { videoId } = selectedVideo.id;
 
   return (
     <Div>

@@ -3,15 +3,15 @@ import { Container, Row, Col } from 'react-bootstrap';
 import RelatedVideosList from '../../components/RelatedVideosList/RelatedVideosList.component';
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer.component';
 
-function Detail({ video, selectVideo }) {
+function Detail() {
   return (
     <Container fluid>
       <Row>
         <Col md={8}>
-          <VideoPlayer video={video} />
+          <VideoPlayer />
         </Col>
         <Col md={4}>
-          <RelatedVideosList video={video} selectVideo={selectVideo} />
+          <RelatedVideosList />
         </Col>
       </Row>
     </Container>

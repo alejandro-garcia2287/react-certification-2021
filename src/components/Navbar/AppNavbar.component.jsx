@@ -1,12 +1,15 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { Navbar, Nav, NavDropdown, Form, FormControl } from 'react-bootstrap';
 import { FaCog } from 'react-icons/fa';
 import debounce from 'lodash.debounce';
+import VideoProvider from '../../state/VideoProvider';
 
-function AppNavbar({ navLinkHref, brand, navLinkText, apiClient: doFetch, selectVideo }) {
+function AppNavbar({ navLinkHref, brand, navLinkText }) {
+  const { doFetch, setSelectedVideo } = useContext(VideoProvider);
+
   const debouncedAPIQuery = useCallback(
     debounce((query) => {
-      selectVideo(undefined);
+      setSelectedVideo(undefined);
       doFetch(
         `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=${query}`
       );

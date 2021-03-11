@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Img,
   StyledContainer,
@@ -7,18 +7,21 @@ import {
   StyledCol,
   StyledCard,
 } from './Card.styled';
+import VideoContext from '../../state/VideoProvider';
 
-function Card({ selectVideoFunction, item, tabIndex }) {
+function Card({ item, tabIndex }) {
+  const { setSelectedVideo } = useContext(VideoContext);
+
   const { title, description } = item.snippet;
   const imgSrc = item.snippet.thumbnails.high.url;
 
   function handleOnClick() {
-    selectVideoFunction(item);
+    setSelectedVideo(item);
   }
 
   function handleOnKeyDown(event) {
     if (event.keyCode === 13) {
-      selectVideoFunction(item);
+      setSelectedVideo(item);
     }
   }
 

@@ -6,6 +6,7 @@ import Home from '../../pages/Home/Home.page';
 import Detail from '../../pages/Detail/Detail.page';
 import GlobalStyle from '../../Global.styles';
 import useFetch from '../../hooks/useFetch';
+import VideoContext from '../../state/VideoProvider';
 
 const theme = {
   primaryBackgroundColor: '#eee',
@@ -13,30 +14,31 @@ const theme = {
 };
 
 function App() {
+  // const initialState = {
+  //   selectedVideo: undefined,
+  //   data: [],
+  //   isLoading: true
+  // };
+  //
+  // const [state, dispatch] = useReducer(VideoReducer, initialState);
+
   const [selectedVideo, setSelectedVideo] = useState();
 
   const [isLoading, data, doFetch] = useFetch(
     `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=wizeline`
   );
-  const { items } = data;
 
   return (
     <ThemeProvider theme={theme}>
       <>
         <GlobalStyle />
-        <AppNavbar
-          brand="React Challenge"
-          navLinkHref="/"
-          navLinkText="Home"
-          apiClient={doFetch}
-          selectVideo={setSelectedVideo}
-        />
-        {isLoading && <h2> Loading</h2>}
-        {selectedVideo ? (
-          <Detail video={selectedVideo} selectVideo={setSelectedVideo} />
-        ) : (
-          <Home items={items} selectVideo={setSelectedVideo} />
-        )}
+        <VideoContext.Provider
+          value={{ selectedVideo, setSelectedVideo, isLoading, data, doFetch }}
+        >
+          <AppNavbar brand="React Challenge" navLinkHref="/" navLinkText="Home" />
+          {isLoading && <h2> Loading</h2>}
+          {selectedVideo ? <Detail /> : <Home />}
+        </VideoContext.Provider>
       </>
     </ThemeProvider>
   );

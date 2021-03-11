@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Row, Img, H1, P, Col } from './RelatedVideo.styled';
+import VideoContext from '../../state/VideoProvider';
 
-function RelatedVideo({ video, selectVideo, tabIndex }) {
+function RelatedVideo({ video, tabIndex }) {
+  const { setSelectedVideo } = useContext(VideoContext);
+
   const { title, description, thumbnails } = video.snippet;
   const imgSrc = thumbnails.high.url;
 
   function handleOnClick() {
-    selectVideo(video);
+    setSelectedVideo(video);
   }
 
   function handleOnKeyDown(event) {
     if (event.keyCode === 13) {
-      selectVideo(video);
+      setSelectedVideo(video);
     }
   }
 
