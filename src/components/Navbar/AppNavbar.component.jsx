@@ -2,12 +2,12 @@ import React, { useCallback, useContext } from 'react';
 import { Navbar, Nav, NavDropdown, Form, FormControl } from 'react-bootstrap';
 import { FaCog } from 'react-icons/fa';
 import debounce from 'lodash.debounce';
-import VideoProvider from '../../state/VideoProvider';
+import VideoContext from '../../state/VideoProvider';
 import reducerFetch from '../../utils/reducerFetch';
 import { ACTIONS } from '../../state/VideoReducer';
 
 function AppNavbar({ navLinkHref, brand, navLinkText }) {
-  const { dispatch } = useContext(VideoProvider);
+  const { dispatch } = useContext(VideoContext);
 
   const debouncedAPIQuery = useCallback(
     debounce((query) => {
