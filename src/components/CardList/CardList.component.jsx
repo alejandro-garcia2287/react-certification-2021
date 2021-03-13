@@ -4,7 +4,8 @@ import CardRow from './CardList.styled';
 import VideoContext from '../../state/VideoProvider';
 
 function CardList() {
-  const { data } = useContext(VideoContext);
+  const { state } = useContext(VideoContext);
+  const { data } = state;
   const { items } = data;
 
   return (

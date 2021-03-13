@@ -1,20 +1,21 @@
 import React, { useContext } from 'react';
 import { Row, Img, H1, P, Col } from './RelatedVideo.styled';
 import VideoContext from '../../state/VideoProvider';
+import { ACTIONS } from '../../state/VideoReducer';
 
 function RelatedVideo({ video, tabIndex }) {
-  const { setSelectedVideo } = useContext(VideoContext);
+  const { dispatch } = useContext(VideoContext);
 
   const { title, description, thumbnails } = video.snippet;
   const imgSrc = thumbnails.high.url;
 
   function handleOnClick() {
-    setSelectedVideo(video);
+    dispatch({ type: ACTIONS.SET_SELECTED_VIDEO, payload: { selectedVideo: video } });
   }
 
   function handleOnKeyDown(event) {
     if (event.keyCode === 13) {
-      setSelectedVideo(video);
+      dispatch({ type: ACTIONS.SET_SELECTED_VIDEO, payload: { selectedVideo: video } });
     }
   }
 

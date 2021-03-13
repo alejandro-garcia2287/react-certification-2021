@@ -1,11 +1,8 @@
 import { createContext } from 'react';
 
 const VideoContext = createContext({
-  selectedVideo: {},
-  setSelectedVideo: () => {},
-  isLoading: true,
-  data: [],
-  doFetch: () => {},
+  state: undefined,
+  dispatch: undefined,
 });
 
 // function VideoProvider({ children }) {

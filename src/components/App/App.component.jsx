@@ -1,43 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import AppNavbar from '../Navbar/AppNavbar.component';
 import Home from '../../pages/Home/Home.page';
 import Detail from '../../pages/Detail/Detail.page';
 import GlobalStyle from '../../Global.styles';
-import useFetch from '../../hooks/useFetch';
 import VideoContext from '../../state/VideoProvider';
+import VideoReducer from '../../state/VideoReducer';
+import reducerFetch from '../../utils/reducerFetch';
 
 const theme = {
   primaryBackgroundColor: '#eee',
   fontFamily: "'Montserrat', sans-serif",
 };
 
+const initialUri = `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=wizeline`;
+
 function App() {
-  // const initialState = {
-  //   selectedVideo: undefined,
-  //   data: [],
-  //   isLoading: true
-  // };
-  //
-  // const [state, dispatch] = useReducer(VideoReducer, initialState);
+  const initialState = {
+    isLoading: true,
+    data: [],
+    selectedVideo: undefined,
+  };
 
-  const [selectedVideo, setSelectedVideo] = useState();
+  const [state, dispatch] = useReducer(VideoReducer, initialState);
 
-  const [isLoading, data, doFetch] = useFetch(
-    `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=wizeline`
-  );
+  useEffect(() => {
+    reducerFetch(initialUri, dispatch);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
       <>
         <GlobalStyle />
-        <VideoContext.Provider
-          value={{ selectedVideo, setSelectedVideo, isLoading, data, doFetch }}
-        >
+        <VideoContext.Provider value={{ state, dispatch }}>
           <AppNavbar brand="React Challenge" navLinkHref="/" navLinkText="Home" />
-          {isLoading && <h2> Loading</h2>}
-          {selectedVideo ? <Detail /> : <Home />}
+          {state.isLoading && <h2> Loading</h2>}
+          {state.selectedVideo ? <Detail /> : <Home />}
         </VideoContext.Provider>
       </>
     </ThemeProvider>

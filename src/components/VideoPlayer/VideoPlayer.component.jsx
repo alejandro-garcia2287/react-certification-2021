@@ -3,8 +3,8 @@ import { Div, P } from './VideoPlayer.styled';
 import VideoContext from '../../state/VideoProvider';
 
 function VideoPlayer() {
-  const { selectedVideo } = useContext(VideoContext);
-
+  const { state } = useContext(VideoContext);
+  const { selectedVideo } = state;
   const { title, description } = selectedVideo.snippet;
   const { videoId } = selectedVideo.id;
 

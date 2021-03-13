@@ -8,20 +8,21 @@ import {
   StyledCard,
 } from './Card.styled';
 import VideoContext from '../../state/VideoProvider';
+import { ACTIONS } from '../../state/VideoReducer';
 
 function Card({ item, tabIndex }) {
-  const { setSelectedVideo } = useContext(VideoContext);
+  const { dispatch } = useContext(VideoContext);
 
   const { title, description } = item.snippet;
   const imgSrc = item.snippet.thumbnails.high.url;
 
   function handleOnClick() {
-    setSelectedVideo(item);
+    dispatch({ type: ACTIONS.SET_SELECTED_VIDEO, payload: { selectedVideo: item } });
   }
 
   function handleOnKeyDown(event) {
     if (event.keyCode === 13) {
-      setSelectedVideo(item);
+      dispatch({ type: ACTIONS.SET_SELECTED_VIDEO, payload: { selectedVideo: item } });
     }
   }
 

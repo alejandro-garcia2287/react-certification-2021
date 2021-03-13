@@ -5,7 +5,8 @@ import useFetch from '../../hooks/useFetch';
 import VideoContext from '../../state/VideoProvider';
 
 function RelatedVideosList() {
-  const { selectedVideo } = useContext(VideoContext);
+  const { state } = useContext(VideoContext);
+  const { selectedVideo } = state;
 
   const [isLoading, data] = useFetch(
     `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&relatedToVideoId=${selectedVideo.id.videoId}`

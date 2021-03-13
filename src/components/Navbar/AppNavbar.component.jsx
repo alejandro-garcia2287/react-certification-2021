@@ -3,18 +3,22 @@ import { Navbar, Nav, NavDropdown, Form, FormControl } from 'react-bootstrap';
 import { FaCog } from 'react-icons/fa';
 import debounce from 'lodash.debounce';
 import VideoProvider from '../../state/VideoProvider';
+import reducerFetch from '../../utils/reducerFetch';
+import { ACTIONS } from '../../state/VideoReducer';
 
 function AppNavbar({ navLinkHref, brand, navLinkText }) {
-  const { doFetch, setSelectedVideo } = useContext(VideoProvider);
+  const { dispatch } = useContext(VideoProvider);
 
   const debouncedAPIQuery = useCallback(
     debounce((query) => {
-      setSelectedVideo(undefined);
-      doFetch(
-        `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=${query}`
-      );
+      dispatch({
+        type: ACTIONS.SET_SELECTED_VIDEO,
+        payload: { selectedVideo: undefined },
+      });
+      const queryUrl = `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=${query}`;
+      reducerFetch(queryUrl, dispatch);
     }, 500),
-    [doFetch]
+    [dispatch]
   );
 
   function handleOnChange(event) {
