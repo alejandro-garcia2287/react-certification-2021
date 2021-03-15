@@ -7,7 +7,8 @@ import reducerFetch from '../../utils/reducerFetch';
 import { ACTIONS } from '../../state/VideoReducer';
 
 function AppNavbar({ navLinkHref, brand, navLinkText }) {
-  const { dispatch } = useContext(VideoContext);
+  const { dispatch, state } = useContext(VideoContext);
+  const { currentTheme } = state;
 
   const debouncedAPIQuery = useCallback(
     debounce((query) => {
@@ -34,8 +35,16 @@ function AppNavbar({ navLinkHref, brand, navLinkText }) {
     }
   }
 
+  function handleThemeClick(event) {
+    event.preventDefault();
+    dispatch({
+      type: ACTIONS.SET_THEME,
+      payload: { theme: event.target.name },
+    });
+  }
+
   return (
-    <Navbar bg="dark" variant="dark" expand="md">
+    <Navbar bg={currentTheme.navbarBg} variant="dark" expand="md">
       <Navbar.Brand href={navLinkHref}>{brand}</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
@@ -53,8 +62,12 @@ function AppNavbar({ navLinkHref, brand, navLinkText }) {
             />
           </Form>
           <NavDropdown id="settings-dropdown" title={<FaCog />}>
-            <NavDropdown.Item href="#action/3.4">Theme 1</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.4">Theme 2</NavDropdown.Item>
+            <NavDropdown.Item name="dark" onClick={handleThemeClick}>
+              Dark
+            </NavDropdown.Item>
+            <NavDropdown.Item name="blue" onClick={handleThemeClick}>
+              Blue
+            </NavDropdown.Item>
           </NavDropdown>
           <Nav.Link href="Login">Login</Nav.Link>
         </Nav>

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { Div, P } from './VideoPlayer.styled';
+import { Div, P, H1 } from './VideoPlayer.styled';
 import VideoContext from '../../state/VideoProvider';
 
 function VideoPlayer() {
@@ -19,7 +19,7 @@ function VideoPlayer() {
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen="allowfullscreen"
       />
-      <h1>{title}</h1>
+      <H1>{title}</H1>
       <P>{description}</P>
     </Div>
   );
