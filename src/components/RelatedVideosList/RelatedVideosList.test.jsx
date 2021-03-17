@@ -2,6 +2,10 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import RelatedVideosList from './RelatedVideosList.component';
 import mockDataInput from '../../youtube-videos-mock.json';
+import mockedData from '../../youtube-videos-mock.json';
+import themes from '../../theme/themes';
+import VideoContext from '../../state/VideoProvider';
+import RelatedVideo from '../RelatedVideo/RelatedVideo.component';
 
 const mockSetUri = jest.fn(() => 'foo');
 let mockIsLoading = false;
@@ -58,15 +62,31 @@ describe('Related Video List tests', () => {
     },
   };
 
+  const context = {
+    state: {
+      isLoading: false,
+      data: mockedData,
+      selectedVideo: video,
+      currentTheme: themes.blue,
+    }, dispatch: jest.fn()
+  };
+
+  function renderRelatedVideoListWithContext({ context, video }) {
+    return render(
+      <VideoContext.Provider value={context}>
+        <RelatedVideosList video={video} />
+      </VideoContext.Provider>);
+  }
+
   it('should render video list', () => {
     mockIsLoading = true;
-    render(<RelatedVideosList video={video} />);
+    renderRelatedVideoListWithContext({ context, video });
     expect(screen.getByText('Loading')).toBeVisible();
   });
 
   it('should render related videos', () => {
     mockIsLoading = false;
-    render(<RelatedVideosList video={video} />);
+    renderRelatedVideoListWithContext({ context, video });
     expect(
       screen.getByText('Video Tour | Welcome to Wizeline Guadalajara')
     ).toBeVisible();

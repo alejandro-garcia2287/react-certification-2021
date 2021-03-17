@@ -1,6 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import VideoPlayer from './VideoPlayer.component';
+import mockedData from '../../youtube-videos-mock.json';
+import themes from '../../theme/themes';
+import VideoContext from '../../state/VideoProvider';
 
 const video = {
   kind: 'youtube#searchResult',
@@ -48,8 +51,25 @@ const video = {
 };
 
 describe('Video player tests', () => {
+  const context = {
+    state: {
+      isLoading: false,
+      data: mockedData,
+      selectedVideo: video,
+      currentTheme: themes.blue,
+    }, dispatch: () => {
+    },
+  };
+
+  function renderVideoPlayerWithContext({ context, video }) {
+    return render(
+      <VideoContext.Provider value={context}>
+        <VideoPlayer video={video} />
+      </VideoContext.Provider>);
+  }
+
   it('should render video interface', () => {
-    render(<VideoPlayer video={video} />);
+    renderVideoPlayerWithContext({ context, video });
     expect(screen.getByText('testTitle')).toBeVisible();
   });
 });

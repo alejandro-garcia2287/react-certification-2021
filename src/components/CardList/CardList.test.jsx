@@ -3,12 +3,31 @@ import { render } from '@testing-library/react';
 import CardList from './CardList.component';
 import mockedData from '../../youtube-videos-mock.json';
 import filterItems from './CardList';
+import VideoContext from '../../state/VideoProvider';
+import themes from '../../theme/themes';
 
 const { items } = mockedData;
 
+const context = {
+  state: {
+    isLoading: true,
+    data: mockedData,
+    selectedVideo: undefined,
+    currentTheme: themes.blue
+  }
+};
+
+
+function renderCardListWithContext(contex) {
+  return render(
+    <VideoContext.Provider value={contex}>
+      <CardList items={items} />
+    </VideoContext.Provider>);
+}
+
 describe('CardList test', () => {
   it('selects an element using the returned value', () => {
-    const { getByText } = render(<CardList items={items} />);
+    const { getByText } = renderCardListWithContext(context);
     expect(getByText('Video Tour | Welcome to Wizeline Guadalajara').tagName).toBe('B');
   });
 

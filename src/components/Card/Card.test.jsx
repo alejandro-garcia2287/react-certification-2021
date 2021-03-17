@@ -1,6 +1,9 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import Card from './Card.component';
+import mockedData from '../../youtube-videos-mock.json';
+import themes from '../../theme/themes';
+import VideoContext from '../../state/VideoProvider';
 
 describe('Card Component tests', () => {
   const item = {
@@ -48,48 +51,63 @@ describe('Card Component tests', () => {
     },
   };
 
+  const context = {
+    state: {
+      isLoading: true,
+      data: mockedData,
+      selectedVideo: undefined,
+      currentTheme: themes.blue,
+    }, dispatch: jest.fn()
+  };
+
+
+  function renderCardWithContext({ context, item }) {
+    return render(
+      <VideoContext.Provider value={context}>
+        <Card item={item} tabIndex="0" />
+      </VideoContext.Provider>);
+  }
+
   it('Card Description defined', () => {
-    render(<Card selectVideoFunction={() => {}} item={item} tabIndex="0" />);
+    renderCardWithContext({ context, item });
     expect(screen.getByText('testDescription')).toBeDefined();
   });
 
   it('Card Title defined', () => {
-    render(<Card selectVideoFunction={() => {}} item={item} tabIndex="0" />);
+    renderCardWithContext({ context, item });
     expect(screen.getByText('testTitle')).toBeDefined();
   });
 
   it('Card Title type', () => {
-    render(<Card selectVideoFunction={() => {}} item={item} tabIndex="0" />);
+    renderCardWithContext({ context, item });
     expect(screen.getByText('testTitle').tagName).toBe('B');
   });
 
   it('Card Description type', () => {
-    render(<Card selectVideoFunction={() => {}} item={item} tabIndex="0" />);
+    renderCardWithContext({ context, item });
     expect(screen.getByText('testDescription').tagName).toBe('P');
   });
 
   it('Card Description class', () => {
-    render(<Card selectVideoFunction={() => {}} item={item} tabIndex="0" />);
+    renderCardWithContext({ context, item });
     expect(screen.getByText('testDescription').classList).toHaveLength(2);
   });
 
   it('Card Title class', () => {
-    render(<Card selectVideoFunction={() => {}} item={item} tabIndex="0" />);
+    renderCardWithContext({ context, item });
     expect(screen.getByText('testTitle').classList).toHaveLength(0);
   });
 
   it('Click handling test', () => {
-    const selectVideoMockFn = jest.fn();
-    render(<Card selectVideoFunction={selectVideoMockFn} item={item} tabIndex="0" />);
+    renderCardWithContext({ context, item });
     const leftClick = { button: 1 };
     fireEvent.click(screen.getByText('testTitle'), leftClick);
-    expect(selectVideoMockFn).toBeCalledTimes(1);
+    expect(context.dispatch).toHaveBeenCalled();
   });
 
   it('Keydown test', () => {
-    const selectVideoMockFn = jest.fn();
-    render(<Card selectVideoFunction={selectVideoMockFn} item={item} tabIndex="0" />);
+    renderCardWithContext({ context, item });
     fireEvent.keyDown(screen.getByText('testTitle'), { key: 'Enter', keyCode: 13 });
-    expect(selectVideoMockFn).toBeCalledTimes(1);
+    expect(context.dispatch).toHaveBeenCalled();
   });
 });
