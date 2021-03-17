@@ -1,6 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Detail from './Detail.page';
+import mockedData from '../../youtube-videos-mock.json';
+import themes from '../../theme/themes';
+import VideoContext from '../../state/VideoProvider';
+import CardList from '../../components/CardList/CardList.component';
 
 const mockSelectVideoFunction = jest.fn();
 const video = {
@@ -49,8 +53,25 @@ const video = {
 };
 
 describe('Video detail page tests', () => {
+  const context = {
+    state: {
+      isLoading: true,
+      data: mockedData,
+      selectedVideo: video,
+      currentTheme: themes.blue
+    }
+  };
+
+
+  function renderDetailWithContext({context}) {
+    return render(
+      <VideoContext.Provider value={context}>
+        <Detail video={video} />
+      </VideoContext.Provider>);
+  }
+
   it('should render detail view properly', () => {
-    render(<Detail video={video} selectVideo={mockSelectVideoFunction} />);
+    renderDetailWithContext({context});
     expect(screen.getByText('testTitle')).toBeDefined();
   });
 });

@@ -1,9 +1,12 @@
-import React from 'react';
-import { Div, P } from './VideoPlayer.styled';
+import React, { useContext } from 'react';
+import { Div, P, H1 } from './VideoPlayer.styled';
+import VideoContext from '../../state/VideoProvider';
 
-function VideoPlayer({ video }) {
-  const { title, description } = video.snippet;
-  const { videoId } = video.id;
+function VideoPlayer() {
+  const { state } = useContext(VideoContext);
+  const { selectedVideo } = state;
+  const { title, description } = selectedVideo.snippet;
+  const { videoId } = selectedVideo.id;
 
   return (
     <Div>
@@ -16,7 +19,7 @@ function VideoPlayer({ video }) {
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen="allowfullscreen"
       />
-      <h1>{title}</h1>
+      <H1>{title}</H1>
       <P>{description}</P>
     </Div>
   );

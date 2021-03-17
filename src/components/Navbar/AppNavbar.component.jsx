@@ -1,17 +1,25 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useContext } from 'react';
 import { Navbar, Nav, NavDropdown, Form, FormControl } from 'react-bootstrap';
 import { FaCog } from 'react-icons/fa';
 import debounce from 'lodash.debounce';
+import VideoContext from '../../state/VideoProvider';
+import reducerFetch from '../../utils/reducerFetch';
+import { ACTIONS } from '../../state/VideoReducer';
 
-function AppNavbar({ navLinkHref, brand, navLinkText, apiClient: doFetch, selectVideo }) {
+function AppNavbar({ navLinkHref, brand, navLinkText }) {
+  const { dispatch, state } = useContext(VideoContext);
+  const { currentTheme } = state;
+
   const debouncedAPIQuery = useCallback(
     debounce((query) => {
-      selectVideo(undefined);
-      doFetch(
-        `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=${query}`
-      );
+      dispatch({
+        type: ACTIONS.SET_SELECTED_VIDEO,
+        payload: { selectedVideo: undefined },
+      });
+      const queryUrl = `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=${query}`;
+      reducerFetch(queryUrl, dispatch);
     }, 500),
-    [doFetch]
+    [dispatch]
   );
 
   function handleOnChange(event) {
@@ -27,8 +35,16 @@ function AppNavbar({ navLinkHref, brand, navLinkText, apiClient: doFetch, select
     }
   }
 
+  function handleThemeClick(event) {
+    event.preventDefault();
+    dispatch({
+      type: ACTIONS.SET_THEME,
+      payload: { theme: event.target.name },
+    });
+  }
+
   return (
-    <Navbar bg="dark" variant="dark" expand="md">
+    <Navbar bg={currentTheme.navbarBg} variant="dark" expand="md">
       <Navbar.Brand href={navLinkHref}>{brand}</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
@@ -46,8 +62,12 @@ function AppNavbar({ navLinkHref, brand, navLinkText, apiClient: doFetch, select
             />
           </Form>
           <NavDropdown id="settings-dropdown" title={<FaCog />}>
-            <NavDropdown.Item href="#action/3.4">Theme 1</NavDropdown.Item>
-            <NavDropdown.Item href="#action/3.4">Theme 2</NavDropdown.Item>
+            <NavDropdown.Item name="dark" onClick={handleThemeClick}>
+              Dark
+            </NavDropdown.Item>
+            <NavDropdown.Item name="blue" onClick={handleThemeClick}>
+              Blue
+            </NavDropdown.Item>
           </NavDropdown>
           <Nav.Link href="Login">Login</Nav.Link>
         </Nav>

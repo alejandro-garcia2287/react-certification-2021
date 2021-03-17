@@ -9,6 +9,7 @@ const Title = styled.div`
 
 const H1 = styled.h1`
   font-family: ${(props) => props.theme.fontFamily};
+  color: ${(props) => props.theme.textColor};
 `;
 
 export { Title, H1 };

@@ -1,6 +1,9 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import RelatedVideo from './RelatedVideo.component';
+import mockedData from '../../youtube-videos-mock.json';
+import themes from '../../theme/themes';
+import VideoContext from '../../state/VideoProvider';
 
 describe('Related Video tests', () => {
   const video = {
@@ -48,27 +51,42 @@ describe('Related Video tests', () => {
     },
   };
 
+  const context = {
+    state: {
+      isLoading: false,
+      data: mockedData,
+      selectedVideo: video,
+      currentTheme: themes.blue,
+    }, dispatch: () => {
+    },
+  };
+
+  function renderRelatedVideoWithContext({ context, video }) {
+    return render(
+      <VideoContext.Provider value={context}>
+        <RelatedVideo video={video} tabIndex="0" />
+      </VideoContext.Provider>);
+  }
+
   it('Related Video defined', () => {
-    render(<RelatedVideo video={video} tabIndex="0" />);
+    renderRelatedVideoWithContext({ context, video });
     expect(screen.getByText('testTitle')).toBeDefined();
   });
 
   it('Click handling test', () => {
-    const selectVideoMockFunction = jest.fn();
-    render(
-      <RelatedVideo video={video} selectVideo={selectVideoMockFunction} tabIndex="0" />
-    );
+    const dispatchMockFunction = jest.fn();
+    context.dispatch = dispatchMockFunction;
+    renderRelatedVideoWithContext({ context, video });
     const leftClick = { button: 1 };
     fireEvent.click(screen.getAllByRole('button')[0], leftClick);
-    expect(selectVideoMockFunction).toBeCalledTimes(1);
+    expect(dispatchMockFunction).toBeCalledTimes(1);
   });
 
   it('Keydown test', () => {
-    const selectVideoMockFunction = jest.fn();
-    render(
-      <RelatedVideo video={video} selectVideo={selectVideoMockFunction} tabIndex="0" />
-    );
+    const dispatchMockFunction = jest.fn();
+    context.dispatch = dispatchMockFunction;
+    renderRelatedVideoWithContext({ context, video });
     fireEvent.keyDown(screen.getAllByRole('button')[1], { key: 'Enter', keyCode: '13' });
-    expect(selectVideoMockFunction).toBeCalledTimes(1);
+    expect(dispatchMockFunction).toBeCalledTimes(1);
   });
 });

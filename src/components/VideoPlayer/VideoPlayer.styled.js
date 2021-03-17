@@ -6,7 +6,11 @@ const Div = styled.div`
 `;
 
 const P = styled.p`
-  color: rgba(0, 0, 0, 0.54);
+  color: ${(props) => props.theme.secondaryTextColor};
 `;
 
-export { Div, P };
+const H1 = styled.h1`
+  color: ${(props) => props.theme.textColor};
+`;
+
+export { Div, P, H1 };

@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import RelatedVideo from '../RelatedVideo/RelatedVideo.component';
 import Container from './RelatedVideosList.styled';
 import useFetch from '../../hooks/useFetch';
+import VideoContext from '../../state/VideoProvider';
 
-function RelatedVideosList({ video, selectVideo }) {
+function RelatedVideosList() {
+  const { state } = useContext(VideoContext);
+  const { selectedVideo } = state;
+
   const [isLoading, data] = useFetch(
-    `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&relatedToVideoId=${video.id.videoId}`
+    `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&relatedToVideoId=${selectedVideo.id.videoId}`
   );
 
   return (
@@ -21,7 +25,6 @@ function RelatedVideosList({ video, selectVideo }) {
               <RelatedVideo
                 key={item.id.videoId || item.id.channelId}
                 video={item}
-                selectVideo={selectVideo}
                 tabIndex={index}
               />
             )

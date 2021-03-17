@@ -10,7 +10,7 @@ html {
     font-family: "Ubuntu", sans-serif;
 }
 body { 
-  background: #eee;
+  background-color: ${(props) => props.theme.backgroundColor};
   margin: 0;
   padding: 0;
 }

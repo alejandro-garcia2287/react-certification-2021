@@ -16,6 +16,8 @@ const StyledCard = styled(BoostrapCard)`
   border-radius: 5px;
   margin-bottom: 20px;
   align-items: stretch; /*stretches all cards same height*/
+  border-color: ${(props) => props.theme.cardBorderColor};
+  background-color: ${(props) => props.theme.cardBackgroundColor};
 
   &:hover {
     box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
@@ -31,6 +33,7 @@ const Title = styled.h1`
   font-family: ${(props) => props.theme.fontFamily};
   font-weight: normal;
   padding-top: 0.8rem;
+  color: ${(props) => props.theme.textColor};
 
   &:hover {
     cursor: pointer;
@@ -40,7 +43,7 @@ const Title = styled.h1`
 const Description = styled.p`
   font-size: 1rem;
   font-family: ${(props) => props.theme.fontFamily};
-  color: #707070;
+  color: ${(props) => props.theme.secondaryTextColor};
   &:hover {
     cursor: pointer;
   }
