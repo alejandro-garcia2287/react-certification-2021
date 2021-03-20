@@ -9,20 +9,23 @@ import {
 } from './Card.styled';
 import VideoContext from '../../state/VideoProvider';
 import { ACTIONS } from '../../state/VideoReducer';
+import {useHistory} from 'react-router';
 
 function Card({ item, tabIndex }) {
   const { dispatch } = useContext(VideoContext);
-
   const { title, description } = item.snippet;
   const imgSrc = item.snippet.thumbnails.high.url;
+  const history = useHistory();
 
   function handleOnClick() {
     dispatch({ type: ACTIONS.SET_SELECTED_VIDEO, payload: { selectedVideo: item } });
+    history.push('/videoDetail');
   }
 
   function handleOnKeyDown(event) {
     if (event.keyCode === 13) {
       dispatch({ type: ACTIONS.SET_SELECTED_VIDEO, payload: { selectedVideo: item } });
+      history.push('/videoDetail');
     }
   }
 

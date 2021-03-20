@@ -1,4 +1,3 @@
-import React from 'react';
 import VideoReducer, { ACTIONS } from './VideoReducer';
 import mockedData from '../youtube-videos-mock.json';
 import themes from '../theme/themes';

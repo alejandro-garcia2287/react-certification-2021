@@ -4,7 +4,7 @@ import AppNavbar from './AppNavbar.component';
 import mockedData from '../../youtube-videos-mock.json';
 import themes from '../../theme/themes';
 import VideoContext from '../../state/VideoProvider';
-import RelatedVideo from '../RelatedVideo/RelatedVideo.component';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('Navbar Component tests', () => {
   const context = {
@@ -19,9 +19,12 @@ describe('Navbar Component tests', () => {
 
   function renderAppNavbarWithContext({ context }) {
     return render(
-      <VideoContext.Provider value={context}>
-        <AppNavbar brand="React Challenge" navLinkHref="/home" navLinkText="Home" />
-      </VideoContext.Provider>);
+      <MemoryRouter initialEntries={['/']}>
+        <VideoContext.Provider value={context}>
+          <AppNavbar brand="React Challenge" navLinkHref="/home" navLinkText="Home" />
+        </VideoContext.Provider>
+      </MemoryRouter>
+    );
   }
 
   it('Navbar brand defined', () => {

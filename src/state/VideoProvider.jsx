@@ -4,6 +4,7 @@ import VideoReducer from './VideoReducer';
 import reducerFetch from '../utils/reducerFetch';
 import themes from '../theme/themes';
 import GlobalStyle from '../Global.styles';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const initialUri = `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=wizeline`;
 
@@ -31,7 +32,9 @@ function VideoProvider({ children }) {
     <ThemeProvider theme={currentTheme}>
       <GlobalStyle />
       <VideoContext.Provider value={{ state, dispatch }}>
-        {children}
+        <Router>
+          {children}
+        </Router>
       </VideoContext.Provider>
     </ThemeProvider>
   );

@@ -4,9 +4,7 @@ import Detail from './Detail.page';
 import mockedData from '../../youtube-videos-mock.json';
 import themes from '../../theme/themes';
 import VideoContext from '../../state/VideoProvider';
-import CardList from '../../components/CardList/CardList.component';
 
-const mockSelectVideoFunction = jest.fn();
 const video = {
   kind: 'youtube#searchResult',
   etag: 'KiCPD9wpstDwl9KObd9o957BneA',

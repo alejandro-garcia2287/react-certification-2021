@@ -1,4 +1,3 @@
-import React from 'react';
 import reducerFetch from './reducerFetch';
 
 describe('reducerFetch', () => {

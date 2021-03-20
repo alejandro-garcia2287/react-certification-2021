@@ -4,6 +4,7 @@ import Card from './Card.component';
 import mockedData from '../../youtube-videos-mock.json';
 import themes from '../../theme/themes';
 import VideoContext from '../../state/VideoProvider';
+import { MemoryRouter } from 'react-router-dom';
 
 describe('Card Component tests', () => {
   const item = {
@@ -57,15 +58,18 @@ describe('Card Component tests', () => {
       data: mockedData,
       selectedVideo: undefined,
       currentTheme: themes.blue,
-    }, dispatch: jest.fn()
+    }, dispatch: jest.fn(),
   };
 
 
   function renderCardWithContext({ context, item }) {
     return render(
-      <VideoContext.Provider value={context}>
-        <Card item={item} tabIndex="0" />
-      </VideoContext.Provider>);
+      <MemoryRouter initialEntries={['/users/2']}>
+        <VideoContext.Provider value={context}>
+          <Card item={item} tabIndex="0" />
+        </VideoContext.Provider>);
+      </MemoryRouter>
+    );
   }
 
   it('Card Description defined', () => {

@@ -5,10 +5,13 @@ import debounce from 'lodash.debounce';
 import VideoContext from '../../state/VideoProvider';
 import reducerFetch from '../../utils/reducerFetch';
 import { ACTIONS } from '../../state/VideoReducer';
+import { Link } from 'react-router-dom';
+import { useHistory } from 'react-router';
 
-function AppNavbar({ navLinkHref, brand, navLinkText }) {
+function AppNavbar() {
   const { dispatch, state } = useContext(VideoContext);
   const { currentTheme } = state;
+  const history = useHistory();
 
   const debouncedAPIQuery = useCallback(
     debounce((query) => {
@@ -18,8 +21,9 @@ function AppNavbar({ navLinkHref, brand, navLinkText }) {
       });
       const queryUrl = `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&q=${query}`;
       reducerFetch(queryUrl, dispatch);
+      history.push('/');
     }, 500),
-    [dispatch]
+    [dispatch],
   );
 
   function handleOnChange(event) {
@@ -45,11 +49,11 @@ function AppNavbar({ navLinkHref, brand, navLinkText }) {
 
   return (
     <Navbar bg={currentTheme.navbarBg} variant="dark" expand="md">
-      <Navbar.Brand href={navLinkHref}>{brand}</Navbar.Brand>
+      <Navbar.Brand>React Challenge</Navbar.Brand>
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="container-fluid">
-          <Nav.Link href={navLinkHref}>{navLinkText}</Nav.Link>
+          <Nav.Link as={Link} to="/">Home</Nav.Link>
         </Nav>
         <Nav>
           <Form inline>

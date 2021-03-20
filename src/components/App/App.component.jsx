@@ -6,7 +6,7 @@ import { VideoProvider } from '../../state/VideoProvider';
 function App() {
   return (
     <VideoProvider>
-      <AppNavbar brand="React Challenge" navLinkHref="/" navLinkText="Home" />
+      <AppNavbar />
       <Content />
     </VideoProvider>
   );
