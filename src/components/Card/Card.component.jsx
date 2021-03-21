@@ -11,7 +11,7 @@ import {
 import VideoContext from '../../state/VideoProvider';
 import { ACTIONS } from '../../state/VideoReducer';
 
-function Card({ item, tabIndex }) {
+function Card({ item, tabIndex, targetRoute }) {
   const { dispatch } = useContext(VideoContext);
   const { title, description } = item.snippet;
   const imgSrc = item.snippet.thumbnails.high.url;
@@ -19,13 +19,13 @@ function Card({ item, tabIndex }) {
 
   function handleOnClick() {
     dispatch({ type: ACTIONS.SET_SELECTED_VIDEO, payload: { selectedVideo: item } });
-    history.push('/videoDetail');
+    history.push(targetRoute);
   }
 
   function handleOnKeyDown(event) {
     if (event.keyCode === 13) {
       dispatch({ type: ACTIONS.SET_SELECTED_VIDEO, payload: { selectedVideo: item } });
-      history.push('/videoDetail');
+      history.push(targetRoute);
     }
   }
 

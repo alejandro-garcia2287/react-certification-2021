@@ -13,6 +13,8 @@ const initialState = {
   data: [],
   selectedVideo: undefined,
   currentTheme: themes.blue,
+  favoritesList:
+    localStorage.getItem('favorites') && JSON.parse(localStorage.getItem('favorites')),
 };
 
 const VideoContext = createContext({
