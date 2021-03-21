@@ -1,23 +1,23 @@
 import React from 'react';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import AppNavbar from './AppNavbar.component';
 import mockedData from '../../youtube-videos-mock.json';
 import themes from '../../theme/themes';
 import VideoContext from '../../state/VideoProvider';
-import { MemoryRouter } from 'react-router-dom';
 
 describe('Navbar Component tests', () => {
-  const context = {
+  const initialContext = {
     state: {
       isLoading: false,
       data: mockedData,
       selectedVideo: {},
       currentTheme: themes.blue,
-    }, dispatch: () => {
     },
+    dispatch: () => {},
   };
 
-  function renderAppNavbarWithContext({ context }) {
+  function renderAppNavbarWithContext(context) {
     return render(
       <MemoryRouter initialEntries={['/']}>
         <VideoContext.Provider value={context}>
@@ -28,27 +28,27 @@ describe('Navbar Component tests', () => {
   }
 
   it('Navbar brand defined', () => {
-    renderAppNavbarWithContext({ context });
+    renderAppNavbarWithContext(initialContext);
     expect(screen.getByText('React Challenge')).toBeDefined();
   });
 
   it('Navbar Home defined', () => {
-    renderAppNavbarWithContext({ context });
+    renderAppNavbarWithContext(initialContext);
     expect(screen.getByText('Home')).toBeDefined();
   });
 
   it('Navbar brand login button defined', () => {
-    renderAppNavbarWithContext({ context });
+    renderAppNavbarWithContext(initialContext);
     expect(screen.getByText('Login')).toBeDefined();
   });
 
   it('Navbar brand class', () => {
-    renderAppNavbarWithContext({ context });
+    renderAppNavbarWithContext(initialContext);
     expect(screen.getByText('React Challenge').classList).toContain('navbar-brand');
   });
 
   it('Navbar Home class', () => {
-    renderAppNavbarWithContext({ context });
+    renderAppNavbarWithContext(initialContext);
     expect(screen.getByText('Home').classList).toContain('nav-link');
   });
 
@@ -56,8 +56,8 @@ describe('Navbar Component tests', () => {
     jest.useFakeTimers();
     const mockDispatch = jest.fn();
     await act(async () => {
-      context.dispatch = mockDispatch;
-      renderAppNavbarWithContext({ context });
+      initialContext.dispatch = mockDispatch;
+      renderAppNavbarWithContext(initialContext);
       fireEvent.change(screen.getByPlaceholderText('Search'), { key: 'A', keyCode: 65 });
       fireEvent.keyDown(screen.getByPlaceholderText('Search'), {
         key: 'Enter',
@@ -72,8 +72,8 @@ describe('Navbar Component tests', () => {
     jest.useFakeTimers();
     const mockDispatch = jest.fn();
     await act(async () => {
-      context.dispatch = mockDispatch;
-      renderAppNavbarWithContext({ context });
+      initialContext.dispatch = mockDispatch;
+      renderAppNavbarWithContext(initialContext);
 
       fireEvent.change(screen.getByPlaceholderText('Search'), {
         target: { value: 'Search text' },

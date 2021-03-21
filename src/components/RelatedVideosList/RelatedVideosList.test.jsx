@@ -2,10 +2,8 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import RelatedVideosList from './RelatedVideosList.component';
 import mockDataInput from '../../youtube-videos-mock.json';
-import mockedData from '../../youtube-videos-mock.json';
 import themes from '../../theme/themes';
 import VideoContext from '../../state/VideoProvider';
-import RelatedVideo from '../RelatedVideo/RelatedVideo.component';
 
 const mockSetUri = jest.fn(() => 'foo');
 let mockIsLoading = false;
@@ -17,7 +15,7 @@ jest.mock('../../hooks/useFetch', () => {
 });
 
 describe('Related Video List tests', () => {
-  const video = {
+  const videoItem = {
     kind: 'youtube#searchResult',
     etag: 'KiCPD9wpstDwl9KObd9o957BneA',
     id: {
@@ -62,31 +60,33 @@ describe('Related Video List tests', () => {
     },
   };
 
-  const context = {
+  const initialContext = {
     state: {
       isLoading: false,
-      data: mockedData,
-      selectedVideo: video,
+      data: mockDataInput,
+      selectedVideo: videoItem,
       currentTheme: themes.blue,
-    }, dispatch: jest.fn()
+    },
+    dispatch: jest.fn(),
   };
 
-  function renderRelatedVideoListWithContext({ context, video }) {
+  function renderRelatedVideoListWithContext(context, video) {
     return render(
       <VideoContext.Provider value={context}>
         <RelatedVideosList video={video} />
-      </VideoContext.Provider>);
+      </VideoContext.Provider>
+    );
   }
 
   it('should render video list', () => {
     mockIsLoading = true;
-    renderRelatedVideoListWithContext({ context, video });
+    renderRelatedVideoListWithContext(initialContext, videoItem);
     expect(screen.getByText('Loading')).toBeVisible();
   });
 
   it('should render related videos', () => {
     mockIsLoading = false;
-    renderRelatedVideoListWithContext({ context, video });
+    renderRelatedVideoListWithContext(initialContext, videoItem);
     expect(
       screen.getByText('Video Tour | Welcome to Wizeline Guadalajara')
     ).toBeVisible();

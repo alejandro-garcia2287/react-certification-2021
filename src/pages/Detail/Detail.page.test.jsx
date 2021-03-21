@@ -51,25 +51,25 @@ const video = {
 };
 
 describe('Video detail page tests', () => {
-  const context = {
+  const initialContext = {
     state: {
       isLoading: true,
       data: mockedData,
       selectedVideo: video,
-      currentTheme: themes.blue
-    }
+      currentTheme: themes.blue,
+    },
   };
 
-
-  function renderDetailWithContext({context}) {
+  function renderDetailWithContext(context) {
     return render(
       <VideoContext.Provider value={context}>
         <Detail video={video} />
-      </VideoContext.Provider>);
+      </VideoContext.Provider>
+    );
   }
 
   it('should render detail view properly', () => {
-    renderDetailWithContext({context});
+    renderDetailWithContext(initialContext);
     expect(screen.getByText('testTitle')).toBeDefined();
   });
 });

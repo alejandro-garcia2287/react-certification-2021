@@ -6,7 +6,7 @@ import themes from '../../theme/themes';
 import VideoContext from '../../state/VideoProvider';
 
 describe('Related Video tests', () => {
-  const video = {
+  const videoItem = {
     kind: 'youtube#searchResult',
     etag: 'KiCPD9wpstDwl9KObd9o957BneA',
     id: {
@@ -51,32 +51,33 @@ describe('Related Video tests', () => {
     },
   };
 
-  const context = {
+  const initialContext = {
     state: {
       isLoading: false,
       data: mockedData,
-      selectedVideo: video,
+      selectedVideo: videoItem,
       currentTheme: themes.blue,
-    }, dispatch: () => {
     },
+    dispatch: () => {},
   };
 
-  function renderRelatedVideoWithContext({ context, video }) {
+  function renderRelatedVideoWithContext(context, video) {
     return render(
       <VideoContext.Provider value={context}>
         <RelatedVideo video={video} tabIndex="0" />
-      </VideoContext.Provider>);
+      </VideoContext.Provider>
+    );
   }
 
   it('Related Video defined', () => {
-    renderRelatedVideoWithContext({ context, video });
+    renderRelatedVideoWithContext(initialContext, videoItem);
     expect(screen.getByText('testTitle')).toBeDefined();
   });
 
   it('Click handling test', () => {
     const dispatchMockFunction = jest.fn();
-    context.dispatch = dispatchMockFunction;
-    renderRelatedVideoWithContext({ context, video });
+    initialContext.dispatch = dispatchMockFunction;
+    renderRelatedVideoWithContext(initialContext, videoItem);
     const leftClick = { button: 1 };
     fireEvent.click(screen.getAllByRole('button')[0], leftClick);
     expect(dispatchMockFunction).toBeCalledTimes(1);
@@ -84,8 +85,8 @@ describe('Related Video tests', () => {
 
   it('Keydown test', () => {
     const dispatchMockFunction = jest.fn();
-    context.dispatch = dispatchMockFunction;
-    renderRelatedVideoWithContext({ context, video });
+    initialContext.dispatch = dispatchMockFunction;
+    renderRelatedVideoWithContext(initialContext, videoItem);
     fireEvent.keyDown(screen.getAllByRole('button')[1], { key: 'Enter', keyCode: '13' });
     expect(dispatchMockFunction).toBeCalledTimes(1);
   });

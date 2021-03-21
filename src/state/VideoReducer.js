@@ -5,6 +5,8 @@ const ACTIONS = {
   SET_DATA: 'SET_DATA',
   SET_SELECTED_VIDEO: 'SET_SELECTED_VIDEO',
   SET_THEME: 'SET_THEME',
+  LOGIN: 'LOGIN',
+  LOGOUT: 'LOGOUT',
 };
 
 function VideoReducer(state, action) {
@@ -21,6 +23,12 @@ function VideoReducer(state, action) {
     }
     case ACTIONS.SET_THEME: {
       return { ...state, currentTheme: themes[action.payload.theme] };
+    }
+    case ACTIONS.LOGIN: {
+      return { ...state, loggedUser: action.payload.loggedUser };
+    }
+    case ACTIONS.LOGOUT: {
+      return { ...state, loggedUser: undefined };
     }
     default: {
       return state;

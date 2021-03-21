@@ -5,7 +5,7 @@ import mockedData from '../../youtube-videos-mock.json';
 import themes from '../../theme/themes';
 import VideoContext from '../../state/VideoProvider';
 
-const video = {
+const videoItem = {
   kind: 'youtube#searchResult',
   etag: 'KiCPD9wpstDwl9KObd9o957BneA',
   id: {
@@ -51,25 +51,26 @@ const video = {
 };
 
 describe('Video player tests', () => {
-  const context = {
+  const initialContext = {
     state: {
       isLoading: false,
       data: mockedData,
-      selectedVideo: video,
+      selectedVideo: videoItem,
       currentTheme: themes.blue,
-    }, dispatch: () => {
     },
+    dispatch: () => {},
   };
 
-  function renderVideoPlayerWithContext({ context, video }) {
+  function renderVideoPlayerWithContext(context, video) {
     return render(
       <VideoContext.Provider value={context}>
         <VideoPlayer video={video} />
-      </VideoContext.Provider>);
+      </VideoContext.Provider>
+    );
   }
 
   it('should render video interface', () => {
-    renderVideoPlayerWithContext({ context, video });
+    renderVideoPlayerWithContext(initialContext, videoItem);
     expect(screen.getByText('testTitle')).toBeVisible();
   });
 });

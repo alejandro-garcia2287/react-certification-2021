@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { useHistory } from 'react-router';
 import {
   Img,
   StyledContainer,
@@ -9,7 +10,6 @@ import {
 } from './Card.styled';
 import VideoContext from '../../state/VideoProvider';
 import { ACTIONS } from '../../state/VideoReducer';
-import {useHistory} from 'react-router';
 
 function Card({ item, tabIndex }) {
   const { dispatch } = useContext(VideoContext);
