@@ -1,6 +1,6 @@
 import React from 'react';
-import LoginModal from './Login.component';
 import { render } from '@testing-library/react';
+import LoginModal from './Login.component';
 import VideoContext from '../../state/VideoProvider';
 import mockedData from '../../youtube-videos-mock.json';
 import themes from '../../theme/themes';
@@ -20,7 +20,7 @@ describe('Login', () => {
     return render(
       <VideoContext.Provider value={context}>
         <LoginModal />
-      </VideoContext.Provider>,
+      </VideoContext.Provider>
     );
   }
 

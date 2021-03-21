@@ -58,7 +58,7 @@ describe('Related Video List tests', () => {
       selectedVideo: videoItem,
       currentTheme: themes.blue,
       loggedUser: {},
-      favoritesList: [mockDataInput.items[3]]
+      favoritesList: [mockDataInput.items[3]],
     },
     dispatch: jest.fn(),
   };

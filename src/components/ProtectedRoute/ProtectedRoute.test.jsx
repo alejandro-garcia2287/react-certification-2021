@@ -1,28 +1,15 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import ProtectedRoute from './ProtectedRoute';
+import VideoContext from '../../state/VideoProvider';
 import mockedData from '../../youtube-videos-mock.json';
 import themes from '../../theme/themes';
-import VideoContext from '../../state/VideoProvider';
-import Favorites from './Favorites.page';
+import { MemoryRouter } from 'react-router-dom';
+import Favorites from '../../pages/Favorites/Favorites.page';
 
-describe('Favorite Page tests', () => {
-  const contextNoFavorites = {
-    state: {
-      isLoading: false,
-      data: mockedData,
-      selectedVideo: undefined,
-      currentTheme: themes.blue,
-      loggedUser: {
-        id: '123',
-        name: 'Wizeline',
-        avatarUrl:
-          'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
-      },
-    },
-    dispatch: () => {},
-  };
+describe('Protected Route Test', () => {
 
-  const contextFavorites = {
+  const contextSession = {
     state: {
       isLoading: false,
       data: mockedData,
@@ -72,24 +59,38 @@ describe('Favorite Page tests', () => {
         },
       ],
     },
-    dispatch: () => {},
+    dispatch: () => {
+    },
   };
 
-  function renderFavoritesWithContext(context) {
+  const contextNoSession = {
+    state: {
+      isLoading: false,
+      data: mockedData,
+      selectedVideo: undefined,
+      currentTheme: themes.blue,
+    },
+    dispatch: () => {
+    },
+  };
+
+  function renderProtectedRoute(context) {
     return render(
-      <VideoContext.Provider value={context}>
-        <Favorites />
-      </VideoContext.Provider>
+      <MemoryRouter initialEntries={['/users/2']}>
+        <VideoContext.Provider value={context}>
+          <ProtectedRoute path="/favorites" component={Favorites} />
+        </VideoContext.Provider>
+      </MemoryRouter>
     );
   }
 
-  it('Favorite page defined', () => {
-    renderFavoritesWithContext(contextFavorites);
-    expect(screen.getByText('Favorite Videos')).toBeDefined();
+  it('Existing session, favorite should be shown', () => {
+    renderProtectedRoute(contextSession);
+    expect(screen.getAllByText('')).toBeDefined();
   });
 
-  it('Favorite page defined but no videos added', () => {
-    renderFavoritesWithContext(contextNoFavorites);
-    expect(screen.getByText("You don't have favorite videos.")).toBeDefined();
+  it('No session, error should be shown', () => {
+    renderProtectedRoute(contextNoSession);
+    expect(screen.getAllByText('403: You don not have access to the requested page')).toBeDefined();
   });
 });

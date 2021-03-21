@@ -41,6 +41,11 @@
     "pretty-quick": "^3.0.0",
     "regenerator-runtime": "^0.13.7"
   },
+  "jest": {
+    "setupFilesAfterEnv": [
+      "./src/setupTests.js"
+    ]
+  },
   "babel": {
     "presets": [
       "@babel/preset-react",

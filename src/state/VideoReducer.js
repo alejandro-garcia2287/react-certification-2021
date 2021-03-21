@@ -25,7 +25,12 @@ function addVideoToLocalStorage(video) {
   }
 
   if (video) {
-    favorites.push(video);
+    const alreadyAdded = favorites.filter(
+      (existingVideo) => existingVideo.id.videoId === video.id.videoId
+    );
+    if (alreadyAdded.length === 0) {
+      favorites.push(video);
+    }
   }
 
   localStorage.setItem(CONSTANTS.FAVORITES, JSON.stringify(favorites));
