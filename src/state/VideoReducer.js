@@ -7,7 +7,46 @@ const ACTIONS = {
   SET_THEME: 'SET_THEME',
   LOGIN: 'LOGIN',
   LOGOUT: 'LOGOUT',
+  ADD_TO_FAVORITES: 'ADD_TO_FAVORITES',
+  REMOVE_FROM_FAVORITES: 'REMOVE_FROM_FAVORITES',
 };
+
+const CONSTANTS = {
+  FAVORITES: 'favorites',
+};
+
+function addVideoToLocalStorage(video) {
+  let favorites = localStorage.getItem(CONSTANTS.FAVORITES);
+
+  if (!favorites) {
+    favorites = [];
+  } else {
+    favorites = JSON.parse(favorites);
+  }
+
+  if (video) {
+    favorites.push(video);
+  }
+
+  localStorage.setItem(CONSTANTS.FAVORITES, JSON.stringify(favorites));
+  return favorites;
+}
+
+function removeVideoFromLocalStorage(video) {
+  let favorites = localStorage.getItem(CONSTANTS.FAVORITES);
+  if (!favorites) {
+    favorites = [];
+  } else {
+    favorites = JSON.parse(favorites);
+  }
+
+  if (video) {
+    favorites = favorites.filter((item) => item.id.videoId !== video.id.videoId);
+  }
+
+  localStorage.setItem(CONSTANTS.FAVORITES, JSON.stringify(favorites));
+  return favorites;
+}
 
 function VideoReducer(state, action) {
   const { isLoading, data, selectedVideo } = action.payload;
@@ -29,6 +68,14 @@ function VideoReducer(state, action) {
     }
     case ACTIONS.LOGOUT: {
       return { ...state, loggedUser: undefined };
+    }
+    case ACTIONS.ADD_TO_FAVORITES: {
+      const favoritesList = addVideoToLocalStorage(action.payload.video);
+      return { ...state, favoritesList };
+    }
+    case ACTIONS.REMOVE_FROM_FAVORITES: {
+      const favoritesList = removeVideoFromLocalStorage(action.payload.video);
+      return { ...state, favoritesList };
     }
     default: {
       return state;

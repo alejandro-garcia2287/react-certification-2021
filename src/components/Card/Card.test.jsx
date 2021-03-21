@@ -58,7 +58,8 @@ describe('Card Component tests', () => {
       data: mockedData,
       selectedVideo: undefined,
       currentTheme: themes.blue,
-    }, dispatch: jest.fn(),
+    },
+    dispatch: jest.fn(),
   };
 
   function renderCardWithContext(context, item) {
@@ -66,8 +67,9 @@ describe('Card Component tests', () => {
       <MemoryRouter initialEntries={['/users/2']}>
         <VideoContext.Provider value={context}>
           <Card item={item} tabIndex="0" />
-        </VideoContext.Provider>);
-      </MemoryRouter>,
+        </VideoContext.Provider>
+        );
+      </MemoryRouter>
     );
   }
 

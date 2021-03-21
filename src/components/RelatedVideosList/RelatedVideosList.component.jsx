@@ -8,8 +8,10 @@ function RelatedVideosList() {
   const { state } = useContext(VideoContext);
   const { selectedVideo } = state;
 
+  const videoId = (selectedVideo && selectedVideo.id.videoId) || '';
+
   const [isLoading, data] = useFetch(
-    `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&relatedToVideoId=${selectedVideo.id.videoId}`
+    `${process.env.REACT_APP_YOUTUBE_API_URL}/search?key=${process.env.REACT_APP_YOUTUBE_API_API_KEY}&part=snippet&type=video&maxResults=21&relatedToVideoId=${videoId}`
   );
 
   return (
