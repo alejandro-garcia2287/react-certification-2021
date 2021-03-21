@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
-import Container from '../../components/RelatedVideosList/RelatedVideosList.styled';
+import Container from '../RelatedVideosList/RelatedVideosList.styled';
 import VideoContext from '../../state/VideoProvider';
-import RelatedVideo from '../../components/RelatedVideo/RelatedVideo.component';
+import RelatedVideo from '../RelatedVideo/RelatedVideo.component';
 
 function FavoriteVideosList() {
   const { state } = useContext(VideoContext);

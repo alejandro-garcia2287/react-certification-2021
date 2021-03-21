@@ -42,4 +42,42 @@ describe('Video Reducer tests', () => {
     const updatedState = VideoReducer(state, action);
     expect(updatedState).toBe(state);
   });
+
+  it('LOGIN', () => {
+    const mockedUser = {
+      id: '123',
+      name: 'Wizeline',
+      avatarUrl:
+        'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
+    };
+    const action = { type: 'LOGIN', payload: { loggedUser: mockedUser } };
+    const updatedState = VideoReducer(state, action);
+    expect(updatedState.loggedUser).toBe(mockedUser);
+  });
+
+  it('LOGOUT', () => {
+    const action = { type: 'LOGOUT', payload: {} };
+    const updatedState = VideoReducer(state, action);
+    expect(updatedState.loggedUser).toBeFalsy();
+  });
+
+  it('ADD_TO_FAVORITES', () => {
+    const action = { type: ACTIONS.ADD_TO_FAVORITES, payload: { video: mockedData.items[3] } };
+    const { favoritesList } = VideoReducer(state, action);
+    expect(favoritesList).toBeTruthy();
+    expect(favoritesList.length).toBeGreaterThan(0);
+  });
+
+  it('REMOVE_FROM_FAVORITES', () => {
+    const action = { type: ACTIONS.ADD_TO_FAVORITES, payload: { video: mockedData.items[3] } };
+    const { favoritesList } = VideoReducer(state, action);
+    expect(favoritesList).toBeTruthy();
+    expect(favoritesList.length).toBeGreaterThan(0);
+
+    const removeAction = { type: ACTIONS.REMOVE_FROM_FAVORITES, payload: { video: mockedData.items[3] } };
+    const { favoritesList: afterRemoved } = VideoReducer(state, removeAction);
+    expect(afterRemoved).toBeTruthy();
+    expect(afterRemoved.length).toBe(0);
+  });
+
 });

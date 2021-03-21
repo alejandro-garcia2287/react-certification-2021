@@ -1,7 +1,7 @@
 import { Col, Container, Row } from 'react-bootstrap';
 import React from 'react';
 import VideoPlayer from '../../components/VideoPlayer/VideoPlayer.component';
-import FavoriteVideosList from '../FavoriteVideosList/FavoriteVideosList';
+import FavoriteVideosList from '../../components/FavoriteVideosList/FavoriteVideosList.component';
 
 function FavoriteDetail() {
   return (

@@ -20,7 +20,7 @@ function Favorites() {
   return (
     <>
       <Title>
-        <H1>Favorites Videos</H1>
+        <H1>Favorite Videos</H1>
       </Title>
       {favoritesList && (
         <CardRow>

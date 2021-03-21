@@ -11,14 +11,14 @@ function LoginModal(props) {
   const [loginError, setLoginError] = useState('');
   const { dispatch } = useContext(VideoContext);
 
-  function clearInputsAndClose() {
+  const clearInputsAndClose = () => {
     setUsername('');
     setPassword('');
     setLoginError('');
     props.onHide();
-  }
+  };
 
-  function handleLogin() {
+  const handleLogin = () => {
     loginApi(username, password)
       .then((user) => {
         dispatch({
@@ -30,7 +30,7 @@ function LoginModal(props) {
       .catch((err) => {
         setLoginError(JSON.stringify(err));
       });
-  }
+  };
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
