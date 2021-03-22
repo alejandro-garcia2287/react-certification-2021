@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useReducer } from 'react';
 import { ThemeProvider } from 'styled-components';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { HashRouter as Router } from 'react-router-dom';
 import VideoReducer from './VideoReducer';
 import reducerFetch from '../utils/reducerFetch';
 import themes from '../theme/themes';
