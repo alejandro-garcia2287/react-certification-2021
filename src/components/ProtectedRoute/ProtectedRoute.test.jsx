@@ -1,14 +1,13 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import ProtectedRoute from './ProtectedRoute';
 import VideoContext from '../../state/VideoProvider';
 import mockedData from '../../youtube-videos-mock.json';
 import themes from '../../theme/themes';
-import { MemoryRouter } from 'react-router-dom';
 import Favorites from '../../pages/Favorites/Favorites.page';
 
 describe('Protected Route Test', () => {
-
   const contextSession = {
     state: {
       isLoading: false,
@@ -59,8 +58,7 @@ describe('Protected Route Test', () => {
         },
       ],
     },
-    dispatch: () => {
-    },
+    dispatch: () => {},
   };
 
   const contextNoSession = {
@@ -70,8 +68,7 @@ describe('Protected Route Test', () => {
       selectedVideo: undefined,
       currentTheme: themes.blue,
     },
-    dispatch: () => {
-    },
+    dispatch: () => {},
   };
 
   function renderProtectedRoute(context) {
@@ -91,6 +88,8 @@ describe('Protected Route Test', () => {
 
   it('No session, error should be shown', () => {
     renderProtectedRoute(contextNoSession);
-    expect(screen.getAllByText('403: You don not have access to the requested page')).toBeDefined();
+    expect(
+      screen.getAllByText('403: You don not have access to the requested page')
+    ).toBeDefined();
   });
 });

@@ -20,8 +20,12 @@ function Content() {
         <Route path="/videoDetail" component={Detail} />
         <ProtectedRoute path="/favorites" component={Favorites} />
         <ProtectedRoute path="/favoriteDetail" component={FavoriteDetail} />
-        <Route path="*" render={(props) =>
-          <Error reason={'404: The requested page was not found'} {...props} />} />
+        <Route
+          path="*"
+          render={(props) => (
+            <Error reason="404: The requested page was not found" {...props} />
+          )}
+        />
       </Switch>
     </>
   );
