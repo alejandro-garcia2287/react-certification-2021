@@ -1,18 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import RelatedVideosList from './RelatedVideosList.component';
 import mockDataInput from '../../youtube-videos-mock.json';
 import themes from '../../theme/themes';
 import VideoContext from '../../state/VideoProvider';
-
-const mockSetUri = jest.fn(() => 'foo');
-let mockIsLoading = false;
-
-jest.mock('../../hooks/useFetch', () => {
-  return jest.fn(() => {
-    return [mockIsLoading, mockDataInput, mockSetUri];
-  });
-});
+import FavoriteVideosList from './FavoriteVideosList.component';
 
 describe('Related Video List tests', () => {
   const videoItem = {
@@ -66,29 +57,24 @@ describe('Related Video List tests', () => {
       data: mockDataInput,
       selectedVideo: videoItem,
       currentTheme: themes.blue,
+      loggedUser: {},
+      favoritesList: [mockDataInput.items[3]],
     },
     dispatch: jest.fn(),
   };
 
-  function renderRelatedVideoListWithContext(context, video) {
+  function renderFavoriteVideoListWithContext(context, video) {
     return render(
       <VideoContext.Provider value={context}>
-        <RelatedVideosList video={video} />
+        <FavoriteVideosList video={video} />
       </VideoContext.Provider>
     );
   }
 
-  it('should render video list', () => {
-    mockIsLoading = true;
-    renderRelatedVideoListWithContext(initialContext, videoItem);
-    expect(screen.getByText('Loading')).toBeVisible();
-  });
-
   it('should render related videos', () => {
-    mockIsLoading = false;
-    renderRelatedVideoListWithContext(initialContext, videoItem);
+    renderFavoriteVideoListWithContext(initialContext, videoItem);
     expect(
-      screen.getByText('Video Tour | Welcome to Wizeline Guadalajara')
+      screen.getByText('Wizeline hace sentir a empleados como en casa')
     ).toBeVisible();
   });
 });

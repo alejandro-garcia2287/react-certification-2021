@@ -13,7 +13,12 @@ function CardList() {
       {items && (
         <CardRow>
           {items.map((item, index) => (
-            <Card key={item.etag} item={item} tabIndex={index} />
+            <Card
+              key={item.etag}
+              item={item}
+              tabIndex={index}
+              targetRoute="/videoDetail"
+            />
           ))}
         </CardRow>
       )}

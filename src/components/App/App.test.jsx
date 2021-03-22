@@ -24,7 +24,7 @@ describe('App Component test', () => {
 
   it('Navbar type', () => {
     render(<App />);
-    expect(screen.getByText('React Challenge').tagName).toBe('A');
+    expect(screen.getByText('React Challenge').tagName).toBe('SPAN');
   });
 
   it('Main title defined', () => {

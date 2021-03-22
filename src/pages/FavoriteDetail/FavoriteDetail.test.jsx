@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Detail from './Detail.page';
 import mockedData from '../../youtube-videos-mock.json';
 import themes from '../../theme/themes';
 import VideoContext from '../../state/VideoProvider';
+import FavoriteDetail from './FavoriteDetail.page';
 
 const video = {
   kind: 'youtube#searchResult',
@@ -50,26 +50,33 @@ const video = {
   },
 };
 
-describe('Video detail page tests', () => {
+describe('Favorite Video Detail page tests', () => {
   const initialContext = {
     state: {
       isLoading: true,
       data: mockedData,
       selectedVideo: video,
       currentTheme: themes.blue,
+      favoritesList: mockedData.items,
+      loggedUser: {
+        id: '123',
+        name: 'Wizeline',
+        avatarUrl:
+          'https://media.glassdoor.com/sqll/868055/wizeline-squarelogo-1473976610815.png',
+      },
     },
   };
 
-  function renderDetailWithContext(context) {
+  function renderFavoriteDetailWithContext(context) {
     return render(
       <VideoContext.Provider value={context}>
-        <Detail video={video} />
+        <FavoriteDetail video={video} />
       </VideoContext.Provider>
     );
   }
 
   it('should render detail view properly', () => {
-    renderDetailWithContext(initialContext);
+    renderFavoriteDetailWithContext(initialContext);
     expect(screen.getByText('testTitle')).toBeDefined();
   });
 });

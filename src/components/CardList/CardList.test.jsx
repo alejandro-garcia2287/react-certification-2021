@@ -13,16 +13,16 @@ const context = {
     isLoading: true,
     data: mockedData,
     selectedVideo: undefined,
-    currentTheme: themes.blue
-  }
+    currentTheme: themes.blue,
+  },
 };
-
 
 function renderCardListWithContext(contex) {
   return render(
     <VideoContext.Provider value={contex}>
       <CardList items={items} />
-    </VideoContext.Provider>);
+    </VideoContext.Provider>
+  );
 }
 
 describe('CardList test', () => {

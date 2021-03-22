@@ -5,7 +5,53 @@ const ACTIONS = {
   SET_DATA: 'SET_DATA',
   SET_SELECTED_VIDEO: 'SET_SELECTED_VIDEO',
   SET_THEME: 'SET_THEME',
+  LOGIN: 'LOGIN',
+  LOGOUT: 'LOGOUT',
+  ADD_TO_FAVORITES: 'ADD_TO_FAVORITES',
+  REMOVE_FROM_FAVORITES: 'REMOVE_FROM_FAVORITES',
 };
+
+const CONSTANTS = {
+  FAVORITES: 'favorites',
+};
+
+function addVideoToLocalStorage(video) {
+  let favorites = localStorage.getItem(CONSTANTS.FAVORITES);
+
+  if (!favorites) {
+    favorites = [];
+  } else {
+    favorites = JSON.parse(favorites);
+  }
+
+  if (video) {
+    const alreadyAdded = favorites.filter(
+      (existingVideo) => existingVideo.id.videoId === video.id.videoId
+    );
+    if (alreadyAdded.length === 0) {
+      favorites.push(video);
+    }
+  }
+
+  localStorage.setItem(CONSTANTS.FAVORITES, JSON.stringify(favorites));
+  return favorites;
+}
+
+function removeVideoFromLocalStorage(video) {
+  let favorites = localStorage.getItem(CONSTANTS.FAVORITES);
+  if (!favorites) {
+    favorites = [];
+  } else {
+    favorites = JSON.parse(favorites);
+  }
+
+  if (video) {
+    favorites = favorites.filter((item) => item.id.videoId !== video.id.videoId);
+  }
+
+  localStorage.setItem(CONSTANTS.FAVORITES, JSON.stringify(favorites));
+  return favorites;
+}
 
 function VideoReducer(state, action) {
   const { isLoading, data, selectedVideo } = action.payload;
@@ -21,6 +67,20 @@ function VideoReducer(state, action) {
     }
     case ACTIONS.SET_THEME: {
       return { ...state, currentTheme: themes[action.payload.theme] };
+    }
+    case ACTIONS.LOGIN: {
+      return { ...state, loggedUser: action.payload.loggedUser };
+    }
+    case ACTIONS.LOGOUT: {
+      return { ...state, loggedUser: undefined };
+    }
+    case ACTIONS.ADD_TO_FAVORITES: {
+      const favoritesList = addVideoToLocalStorage(action.payload.video);
+      return { ...state, favoritesList };
+    }
+    case ACTIONS.REMOVE_FROM_FAVORITES: {
+      const favoritesList = removeVideoFromLocalStorage(action.payload.video);
+      return { ...state, favoritesList };
     }
     default: {
       return state;
